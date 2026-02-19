@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Boleta de Pago (MOCK)</title>
+  <title>Boleta de Pago</title>
   <style>
     :root {
       --bg: #0b0f19;
@@ -24,8 +24,7 @@
       place-items: center;
       padding: 28px;
     }
-    .wrap { width: min(920px, 100%); display: grid; gap: 16px; grid-template-columns: 1.1fr .9fr; }
-    @media (max-width: 840px) { .wrap { grid-template-columns: 1fr; } }
+    .wrap { width: min(480px, 100%); }
     .card {
       background: rgba(18,26,42,.92);
       border: 1px solid var(--border);
@@ -70,15 +69,6 @@
     }
     .btn:hover { background: rgba(255,255,255,.12); }
     .muted { color: var(--muted); font-size: 12px; line-height: 1.4; }
-    pre {
-      margin: 0; padding: 14px;
-      overflow:auto;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      background: rgba(0,0,0,.25);
-      font-size: 12px;
-      color: rgba(232,238,245,.92);
-    }
     .modal {
       position: fixed; inset: 0;
       background: rgba(0,0,0,.62);
@@ -95,8 +85,8 @@
     <section class="card" id="boleta">
       <div class="top">
         <div>
-          <div class="title">Boleta de Pago <span class="badge">MOCK</span></div>
-          <div class="muted">Esta página es un mock estático para demo. No procesa pagos reales.</div>
+          <div class="title">Boleta de Pago</div>
+          <div class="muted">Detalle de su deuda pendiente</div>
         </div>
         <div class="badge" id="estado">ESTADO: ...</div>
       </div>
@@ -124,33 +114,18 @@
         <div class="badge" id="moneda">ARS</div>
       </div>
 
-      <button class="btn" id="pagar">Pagar (simulación)</button>
-      <div class="muted" style="margin-top:10px">
-        Tip: podés hostear esto en GitHub Pages / Netlify / Vercel como sitio estático.
-      </div>
+      <button class="btn" id="pagar">Pagar ahora</button>
     </section>
-
-    <aside class="card">
-      <div class="top">
-        <div class="title">Payload (sanitizado)</div>
-        <span class="badge">Datos Mock</span>
-      </div>
-      <div class="muted" style="margin:10px 0 10px">
-        Nota: se removió token y datos sensibles. Si querés mostrar DNI/email reales, hacelo solo en entorno privado.
-      </div>
-      <pre id="json"></pre>
-    </aside>
   </div>
 
   <div class="modal" id="modal">
     <div class="card">
       <div class="top">
-        <div class="title">Pago simulado</div>
+        <div class="title">Pago procesado</div>
         <button class="badge" id="cerrar">Cerrar</button>
       </div>
-      <p class="muted" style="margin:12px 0 6px">Resultado:</p>
-      <p class="ok">✅ Pago marcado como APROBADO (mock)</p>
-      <p class="muted">No se comunicó con ningún gateway. Esto solo cambia el estado en el navegador.</p>
+      <p class="ok" style="margin:16px 0 8px; font-size: 18px;">Pago realizado con exito</p>
+      <p class="muted">Gracias por su pago. Recibirá un comprobante en su correo electrónico.</p>
     </div>
   </div>
 
@@ -186,8 +161,8 @@
     };
 
     function main() {
-
-      document.getElementById('estado').textContent = 'ESTADO: ' + data.mock.payment_status;
+      const estadoTexto = data.mock.payment_status === 'PAID' ? 'Pagado' : 'Pendiente';
+      document.getElementById('estado').textContent = estadoTexto;
       document.getElementById('ref').textContent = data.mock.payment_reference;
       document.getElementById('nro_mora').textContent = data.mora.nro_mora;
 
@@ -207,12 +182,10 @@
       document.getElementById('total').textContent = money(total);
       document.getElementById('detalle').textContent = `Monto: ${money(monto)} · Interés: ${money(interes)}`;
 
-      document.getElementById('json').textContent = JSON.stringify(data, null, 2);
-
       const modal = document.getElementById('modal');
       document.getElementById('pagar').addEventListener('click', () => {
         data.mock.payment_status = 'PAID';
-        document.getElementById('estado').textContent = 'ESTADO: ' + data.mock.payment_status;
+        document.getElementById('estado').textContent = 'Pagado';
         modal.classList.add('open');
       });
       document.getElementById('cerrar').addEventListener('click', () => modal.classList.remove('open'));
