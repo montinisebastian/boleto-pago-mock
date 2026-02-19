@@ -3,21 +3,21 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Boleta de Pago</title>
+  <title>Boleta de Pago - GestorAR</title>
   <style>
     :root {
-      --bg: #0b0f19;
-      --card: #121a2a;
-      --muted: #9aa6b2;
-      --text: #e8eef5;
-      --border: rgba(255,255,255,.10);
+      --primary: #75B4E8;
+      --primary-dark: #1e3a5f;
+      --bg: #f0f6fc;
+      --card: #ffffff;
+      --muted: #5a6a7a;
+      --text: #1e3a5f;
+      --border: rgba(30,58,95,.12);
     }
     body {
       margin: 0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-      background: radial-gradient(1200px 600px at 20% 10%, rgba(80,120,255,.25), transparent 55%),
-                  radial-gradient(900px 500px at 80% 35%, rgba(0,255,200,.10), transparent 60%),
-                  var(--bg);
+      background: linear-gradient(135deg, #e8f4fc 0%, #f0f6fc 50%, #e0ecf4 100%);
       color: var(--text);
       min-height: 100vh;
       display: grid;
@@ -25,70 +25,81 @@
       padding: 28px;
     }
     .wrap { width: min(480px, 100%); }
+    .logo {
+      display: block;
+      margin: 0 auto 20px;
+      width: 120px;
+      height: auto;
+    }
     .card {
-      background: rgba(18,26,42,.92);
+      background: var(--card);
       border: 1px solid var(--border);
       border-radius: 18px;
-      box-shadow: 0 12px 40px rgba(0,0,0,.35);
-      padding: 18px 18px 16px;
-      backdrop-filter: blur(8px);
+      box-shadow: 0 8px 32px rgba(30,58,95,.12);
+      padding: 20px;
     }
     .top {
       display:flex; align-items:center; justify-content:space-between; gap: 12px;
-      padding-bottom: 10px; border-bottom: 1px solid var(--border);
+      padding-bottom: 12px; border-bottom: 1px solid var(--border);
     }
     .badge {
-      font-size: 12px; letter-spacing: .08em; text-transform: uppercase;
-      padding: 6px 10px; border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.18);
-      color: var(--muted);
+      font-size: 11px; letter-spacing: .08em; text-transform: uppercase;
+      padding: 6px 12px; border-radius: 999px;
+      background: var(--primary);
+      color: white;
+      font-weight: 600;
     }
-    .title { font-size: 18px; font-weight: 700; }
-    .grid { display:grid; grid-template-columns: repeat(2, 1fr); gap: 10px 14px; margin-top: 12px; }
+    .badge.pending { background: #f0ad4e; }
+    .badge.paid { background: #5cb85c; }
+    .title { font-size: 18px; font-weight: 700; color: var(--primary-dark); }
+    .grid { display:grid; grid-template-columns: repeat(2, 1fr); gap: 12px 16px; margin-top: 16px; }
     .row { display:flex; flex-direction:column; gap:4px; }
-    .k { color: var(--muted); font-size: 12px; }
-    .v { font-size: 14px; font-weight: 600; }
+    .k { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .05em; }
+    .v { font-size: 14px; font-weight: 600; color: var(--text); }
     .amount {
-      margin-top: 14px;
+      margin-top: 16px;
       display:flex; align-items:flex-end; justify-content:space-between; gap: 10px;
-      padding: 14px; border-radius: 14px;
-      border: 1px dashed rgba(255,255,255,.18);
-      background: rgba(255,255,255,.03);
+      padding: 16px; border-radius: 14px;
+      border: 2px solid var(--primary);
+      background: rgba(117,180,232,.08);
     }
-    .big { font-size: 30px; font-weight: 900; line-height: 1; }
+    .big { font-size: 28px; font-weight: 900; line-height: 1; color: var(--primary-dark); }
     .btn {
       width: 100%;
-      margin-top: 12px;
-      padding: 12px 14px;
+      margin-top: 16px;
+      padding: 14px 16px;
       border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.18);
-      background: rgba(255,255,255,.08);
-      color: var(--text);
-      font-weight: 800;
+      border: none;
+      background: linear-gradient(135deg, var(--primary) 0%, #5a9fd4 100%);
+      color: white;
+      font-weight: 700;
+      font-size: 15px;
       cursor: pointer;
+      transition: transform .15s, box-shadow .15s;
     }
-    .btn:hover { background: rgba(255,255,255,.12); }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(117,180,232,.4); }
     .muted { color: var(--muted); font-size: 12px; line-height: 1.4; }
     .modal {
       position: fixed; inset: 0;
-      background: rgba(0,0,0,.62);
+      background: rgba(30,58,95,.5);
       display: none; place-items: center;
       padding: 18px;
     }
     .modal.open { display: grid; }
-    .modal .card { width: min(520px, 100%); }
-    .ok { color: #9dffcd; font-weight: 800; }
+    .modal .card { width: min(420px, 100%); text-align: center; }
+    .ok { color: #28a745; font-weight: 800; }
   </style>
 </head>
 <body>
   <div class="wrap">
+    <img src="logo.jpeg" alt="GestorAR" class="logo">
     <section class="card" id="boleta">
       <div class="top">
         <div>
           <div class="title">Boleta de Pago</div>
           <div class="muted">Detalle de su deuda pendiente</div>
         </div>
-        <div class="badge" id="estado">ESTADO: ...</div>
+        <div class="badge pending" id="estado">Pendiente</div>
       </div>
 
       <div class="grid">
@@ -161,8 +172,14 @@
     };
 
     function main() {
-      const estadoTexto = data.mock.payment_status === 'PAID' ? 'Pagado' : 'Pendiente';
-      document.getElementById('estado').textContent = estadoTexto;
+      const estadoEl = document.getElementById('estado');
+      if (data.mock.payment_status === 'PAID') {
+        estadoEl.textContent = 'Pagado';
+        estadoEl.classList.remove('pending');
+        estadoEl.classList.add('paid');
+      } else {
+        estadoEl.textContent = 'Pendiente';
+      }
       document.getElementById('ref').textContent = data.mock.payment_reference;
       document.getElementById('nro_mora').textContent = data.mora.nro_mora;
 
@@ -185,7 +202,10 @@
       const modal = document.getElementById('modal');
       document.getElementById('pagar').addEventListener('click', () => {
         data.mock.payment_status = 'PAID';
-        document.getElementById('estado').textContent = 'Pagado';
+        const estadoEl = document.getElementById('estado');
+        estadoEl.textContent = 'Pagado';
+        estadoEl.classList.remove('pending');
+        estadoEl.classList.add('paid');
         modal.classList.add('open');
       });
       document.getElementById('cerrar').addEventListener('click', () => modal.classList.remove('open'));
