@@ -1,0 +1,26 @@
+{
+  "persona": {
+    "id": 7,
+    "dni": "XX.XXX.XXX",
+    "apellido": "Diaz",
+    "nombre": "Agustin Santiago Nahuel",
+    "localidad": "San miguel de tucuman",
+    "provincia": "22"
+  },
+  "mora": {
+    "nro_mora": "123222",
+    "inicio_mora": "2020-02-01",
+    "moneda": "ARS",
+    "monto": 350000,
+    "interes": "15000.00",
+    "estado_mora": "PENDIENTE",
+    "tipo_mora": "MORA",
+    "id_cartera": 50
+  },
+  "mock": {
+    "is_mock": true,
+    "generated_at": "2026-02-19T18:14:31",
+    "payment_status": "UNPAID",
+    "payment_reference": "MOCK-ORDER-123"
+  }
+}
