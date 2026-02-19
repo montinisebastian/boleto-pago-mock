@@ -25,10 +25,16 @@
       padding: 28px;
     }
     .wrap { width: min(480px, 100%); }
+    .logo-container {
+      text-align: center;
+      padding: 16px 20px 12px;
+      border-bottom: 1px solid var(--border);
+      margin: -20px -20px 16px -20px;
+      background: linear-gradient(180deg, rgba(117,180,232,.08) 0%, transparent 100%);
+      border-radius: 18px 18px 0 0;
+    }
     .logo {
-      display: block;
-      margin: 0 auto 20px;
-      width: 120px;
+      width: 100px;
       height: auto;
     }
     .card {
@@ -92,8 +98,10 @@
 </head>
 <body>
   <div class="wrap">
-    <img src="logo.jpeg" alt="GestorAR" class="logo">
     <section class="card" id="boleta">
+      <div class="logo-container">
+        <img src="logo.jpeg" alt="GestorAR" class="logo">
+      </div>
       <div class="top">
         <div>
           <div class="title">Boleta de Pago</div>
